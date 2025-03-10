@@ -22,4 +22,19 @@ router.get("/", async (req, res) => {
     }
 });
 
+router.delete("/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const receitaDeletada = await Receita.findByIdAndDelete(id);
+
+        if (!receitaDeletada) {
+            return res.status(404).json({ error: "Receita não encontrada" });
+        }
+
+        res.json({ message: "Receita deletada com sucesso" });
+    } catch (error) {
+        res.status(500).json({ error: "Erro ao deletar receita" });
+    }
+});
+
 export default router;
